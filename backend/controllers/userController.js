@@ -66,23 +66,13 @@ export const login = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
-    // // populate
-    // const populatePosts = await Promise.all(
-    //   user.post.map(async (postId) => {
-    //     const post = await Post.findById(postId);
-    //     if (post.author.equals(user._id)) {
-    //       return post;
-    //     }
-    //     return null;
-    //   })
-    // );
 
     const posts = await Post.find({
       _id: { $in: user.post },
       author: user._id,
     });
 
-    const populatePosts = posts.length ? posts : []; // Ensuring we have an array
+    const populatePosts = posts.length ? posts : [];
 
     user = {
       _id: user._id,
