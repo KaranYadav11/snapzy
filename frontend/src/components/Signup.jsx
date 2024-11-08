@@ -38,8 +38,6 @@ function Signup() {
         }
       );
       if (res.data.success) {
-        console.log(res.data);
-
         setInput({
           username: "",
           email: "",
