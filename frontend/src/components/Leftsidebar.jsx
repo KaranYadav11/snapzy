@@ -68,7 +68,7 @@ function Leftsidebar() {
         navigate("/");
         break;
       case "Search":
-        navigate("/search");
+ window.alert("Search is not implemented yet");
         break;
       case "Explore":
         window.alert("Explore is not implemented yet");
