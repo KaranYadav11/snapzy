@@ -1,4 +1,4 @@
-# Social Media Website
+# Snapzy - Social Media Website
 
 This project enables users to connect, share, and engage with others through posts, comments, and messaging.()
 
