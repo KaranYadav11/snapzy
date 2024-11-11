@@ -10,7 +10,7 @@ import { Badge } from "./ui/badge";
 const RightSidebar = () => {
   const { user } = useSelector((store) => store.auth);
   return (
-    <div className="w-[350px]  my-12 px-4">
+    <div className="w-[350px] hidden md:block my-12 px-4">
       <div className="sticky top-4">
         <div>
           <Link

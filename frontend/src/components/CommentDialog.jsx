@@ -51,7 +51,7 @@ function CommentDialog({ open, setOpen }) {
   const postHandler = async () => {
     try {
       const res = await axios.post(
-        `https://snapzy.onrender.com/api/v1/post/${selectedPost._id}/comment`,
+        `http://localhost:8000/api/v1/post/${selectedPost._id}/comment`,
         { text },
         {
           headers: { "Content-Type": "application/json" },
@@ -79,18 +79,19 @@ function CommentDialog({ open, setOpen }) {
     <Dialog open={open}>
       <DialogOverlay>
         <DialogContent
-          className="border-none ring-0 focus:ring-0 outline-none focus:outline-none bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 w-[800px] h-[390px]"
+          className="border-none ring-0 focus:ring-0 outline-none h-[450px] w-[370px] 
+          rounded-2xl focus:outline-none bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 md:w-[800px] md:h-[390px]"
           onInteractOutside={() => setOpen(false)}
         >
           <div className="flex flex-row gap-0">
-            <div className="w-1/2 ">
+            <div className="w-1/2  hidden md:block">
               <img
                 className="rounded-l-lg object-cover aspect-square w-full h-[390px] "
                 src={selectedPost?.image}
                 alt="postImage"
               />
             </div>
-            <div className="flex flex-col justify-between w-1/2">
+            <div className="flex flex-col justify-between w-full md:w-1/2">
               <div className="flex items-center justify-between px-2">
                 <div className="flex items-center ml-3 gap-2 my-2">
                   <Link>
@@ -108,40 +109,8 @@ function CommentDialog({ open, setOpen }) {
                     {selectedPost?.author?.username}
                   </Link>
                 </div>
-                {/* <Dialog>
-                  <DialogTrigger asChild>
-                    <MoreHorizontal className="cursor-pointer select-none text-zinc-50 hover:text-zinc-300 " />
-                  </DialogTrigger>
-                  <DialogContent className="text-xl text-center border-none p-4 w-[340px] h-auto bg-gradient-to-br from-purple-700 via-pink-500 to-red-400">
-                    <div className="flex flex-col gap-4 items-center justify-evenly">
-                      <Button
-                        variant="ghost"
-                        className="cursor-pointer w-fit rounded-lg text-white hover:bg-rose-500 font-extrabold font-lato"
-                      >
-                        {" "}
-                        <UserRoundX /> Unfollow
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        className="cursor-pointer w-fit rounded-lg text-white font-extrabold font-lato"
-                      >
-                        Add to favorites
-                      </Button>
-                      {user && user?._id === post?.author?._id && (
-                        <Button
-                          // onClick={deletePostHandler}
-                          variant="ghost"
-                          className="cursor-pointer w-fit hover:bg-black hover:text-white rounded-lg text-white font-extrabold font-lato"
-                        >
-                          <Trash />
-                          Delete
-                        </Button>
-                      )}
-                    </div>
-                  </DialogContent>
-                </Dialog> */}
               </div>
-              {/* <hr className="border-t-2 mx-2" /> */}
+              <hr className="border-t-[3px] md:hidden mx-2" />
               <div
                 ref={containerRef}
                 className="flex-1 text-xl flex flex-col gap-3 bg-black/40 rounded-xl font-lato text-white overflow-y-auto max-h-[290px] my-0.5 mx-1 scrollbar-hide p-4"
@@ -171,7 +140,7 @@ function CommentDialog({ open, setOpen }) {
                     onChange={changeEventHandler}
                     spellCheck="false"
                     placeholder="Add a comment..."
-                    className="outline-none underline-none placeholder:text-white/50 placeholder:font-lato placeholder:font-normal focus:outline-none focus:ring-0 text-sm w-full text-white font-medium font-lato placeholder:tracking-wider bg-black/50 mb-0.5 mx-1 border-none"
+                    className="outline-none  underline-none placeholder:text-white/50 placeholder:font-lato placeholder:font-normal focus:outline-none focus:ring-0 text-sm w-full text-white font-medium font-lato placeholder:tracking-wider bg-black/50 mb-4 md:mb-0.5 mx-1 border-none"
                     style={{
                       boxShadow: "none",
                       border: "none",

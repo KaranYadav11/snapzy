@@ -55,7 +55,7 @@ const EditProfile = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "https://snapzy.onrender.com/api/v1/user/profile/edit",
+        "http://localhost:8000/api/v1/user/profile/edit",
         formData,
         {
           headers: {
@@ -92,7 +92,7 @@ const EditProfile = () => {
         </h1>
         <div className="flex items-center bg-gradient-to-br from-purple-700 via-pink-500 to-red-400  justify-between bg-gray-100 rounded-2xl p-4">
           <div className="flex items-center gap-3">
-            <Avatar className="h-20 w-20">
+            <Avatar className=" md:h-20 h-16 w-16  md:w-20">
               <AvatarImage src={user?.profilePicture} alt="post_image" />
               <AvatarFallback className="bg-white/10">
                 {" "}
@@ -103,7 +103,7 @@ const EditProfile = () => {
               <h1 className="font-bold font-lato text-xl text-white ">
                 {user?.username}
               </h1>
-              <span className="text-white font-lato text-sm font-normal">
+              <span className="text-white truncate inline-block w-28  font-lato text-xs md:text-sm font-normal">
                 {user?.bio || "No bio yet"}
               </span>
             </div>
@@ -116,7 +116,7 @@ const EditProfile = () => {
           />
           <Button
             onClick={() => imageRef?.current.click()}
-            className="bg-black h-8 font-lato text-white rounded-2xl font-bold transform duration-300 hover:bg-gray-100 hover:text-black"
+            className="bg-black h-8 font-lato text-xs tracking-tight md:text-normal md:tracking-normal text-white rounded-2xl font-bold transform duration-300 hover:bg-gray-100 hover:text-black"
           >
             <ImageUp /> Change Picture
           </Button>

@@ -15,9 +15,11 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../redux/postSlice.js"; // Adjust the path as necessary
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function CreatePost({ open, setOpen }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { posts } = useSelector((store) => store.post);
   const { user } = useSelector((store) => store.auth);
@@ -41,7 +43,7 @@ function CreatePost({ open, setOpen }) {
     try {
       setLoading(true);
       const res = await axios.post(
-        "https://snapzy.onrender.com/api/v1/post/addpost",
+        "http://localhost:8000/api/v1/post/addpost",
         formData,
         {
           headers: {
@@ -63,6 +65,7 @@ function CreatePost({ open, setOpen }) {
       toast.error(error.response.data.message);
     } finally {
       setLoading(false);
+      navigate("/");
     }
   };
 
@@ -71,7 +74,7 @@ function CreatePost({ open, setOpen }) {
       <Dialog open={open}>
         <DialogContent
           onInteractOutside={() => setOpen(false)}
-          className=" flex overflow-scroll scrollbar-hide overflow-x-hidden flex-col gap-4 items-center text-xl text-center border-none w-[410px] max-h-screen bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 "
+          className="w-full h-full md:h-fit flex overflow-scroll scrollbar-hide overflow-x-hidden flex-col gap-4 items-center text-xl text-center border-none md:w-[410px] md:max-h-screen bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 "
         >
           <DialogHeader className="font-lato mt-3  font-extrabold text-center text-2xl text-white">
             <DialogTitle className="text-3xl antialiased tracking-normal mt-1">

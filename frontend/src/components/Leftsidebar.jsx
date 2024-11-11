@@ -42,12 +42,9 @@ function Leftsidebar() {
   ];
   const logOut = async () => {
     try {
-      const res = await axios.get(
-        `https://snapzy.onrender.com/api/v1/user/logout`,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.get(`http://localhost:8000/api/v1/user/logout`, {
+        withCredentials: true,
+      });
       if (res.data.success) {
         dispatch(setAuthUser(null));
         dispatch(setPosts([]));
@@ -92,7 +89,7 @@ function Leftsidebar() {
     if (!isOpen) dispatch(clearNotification());
   }
   return (
-    <div className="fixed antialiased top-0 left-0 z-10 px-4 h-screen w-[16%] bg-black">
+    <div className="fixed hidden md:block antialiased top-0 left-0 z-10 px-4 h-screen w-[16%]">
       <div className="flex flex-col items-start justify-between">
         <h1 className="text-[44px] font-extrabold antialiased font-pacifico text-center m-6 p-4 tracking-wide bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 text-transparent bg-clip-text select-none">
           Snapzy

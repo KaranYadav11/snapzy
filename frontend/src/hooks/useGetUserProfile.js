@@ -1,16 +1,17 @@
 import { setUserProfile } from "../redux/authSlice.js";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 const useGetUserProfile = (userId) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const res = await axios.get(
-          `https://snapzy.onrender.com/api/v1/user/${userId}/profile`,
+          `http://localhost:8000/api/v1/user/${userId}/profile`,
           {
             withCredentials: true,
           }
@@ -21,9 +22,12 @@ const useGetUserProfile = (userId) => {
       } catch (error) {
         console.log(error);
         toast.error(error.response.data.message);
+      } finally {
+        setLoading(false);
       }
     };
     fetchUserProfile();
   }, [dispatch, userId]);
+  return { loading };
 };
 export default useGetUserProfile;

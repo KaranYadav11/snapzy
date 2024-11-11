@@ -13,6 +13,9 @@ import { setSocket } from "./redux/socketSlice";
 import { setOnlineUsers } from "./redux/chatSlice";
 import { setLikeNotification } from "./redux/rtnSlice";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import Create from "./components/Create";
+import CreateChat from "./components/CreateChat";
+import Convo from "./components/Convo";
 // import { setLikeNotification } from "./redux/rtnSlice";
 const BrowserRouter = createBrowserRouter([
   {
@@ -55,6 +58,30 @@ const BrowserRouter = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
+      {
+        path: "/createpost",
+        element: (
+          <ProtectedRoutes>
+            <Create />,
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/createchat",
+        element: (
+          <ProtectedRoutes>
+            <CreateChat />,
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/conversation/:id",
+        element: (
+          <ProtectedRoutes>
+            <Convo />,
+          </ProtectedRoutes>
+        ),
+      },
     ],
   },
   {
@@ -75,7 +102,7 @@ function App() {
   useEffect(() => {
     let socketio;
     if (user) {
-      socketio = io("https://snapzy.onrender.com", {
+      socketio = io("http://localhost:8000", {
         query: {
           userId: user?._id,
         },
