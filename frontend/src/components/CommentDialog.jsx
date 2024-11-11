@@ -147,7 +147,7 @@ function CommentDialog({ open, setOpen }) {
                     }}
                   />
                   {text && (
-                    <div className="bg-black rounded-lg mr-1">
+                    <div className="bg-black mb-4 md:mb-0 rounded-lg mr-1">
                       {/* <Button
                         onClick={postHandler}
                         className="bg-gradient-to-br tracking-wide text-sm from-purple-700 via-pink-500 to-red-400 bg-black text-transparent bg-clip-text font-bold font-lato p-2"
@@ -155,7 +155,7 @@ function CommentDialog({ open, setOpen }) {
                       <SendHorizontalIcon
                         onClick={postHandler}
                         size={34}
-                        className=" text-white mb-4 p-1 cursor-pointer"
+                        className=" text-white  p-1 cursor-pointer"
                       />
                       {/* </Button> */}
                     </div>
