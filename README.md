@@ -20,12 +20,13 @@ This project enables users to connect, share, and engage with others through pos
 
 ## Tech Stack
 
-- **Frontend**: React, Tailwind CSS ,Shadcn-ui
+- **Frontend**: React,Tailwind CSS ,Shadcn-ui
+- **State Management**: Redux
 - **Backend**: Node.js, Express.js, MongoDB
 - **Real-Time**: WebSocket or Socket.io (for messaging)
 - **Authentication**: JWT (JSON Web Tokens)
 
 ## Compatibility
 
-- **Responsive Design**: This platform is currently optimized for desktop devices only.
+- **Responsive Design**: Works seamlessly on desktops & mobile devices.
 
