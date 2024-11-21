@@ -155,7 +155,7 @@ function CommentDialog({ open, setOpen }) {
                       <SendHorizontalIcon
                         onClick={postHandler}
                         size={34}
-                        className=" text-white p-1 cursor-pointer"
+                        className=" text-white  p-1 cursor-pointer"
                       />
                       {/* </Button> */}
                     </div>
