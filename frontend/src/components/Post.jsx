@@ -33,13 +33,33 @@ function Post({ post }) {
   const [comment, setComment] = useState(post?.comments);
   const [open, setOpen] = useState(false);
 
-  const handleDoubleClick = () => {
+    const debounce = (func, delay) => {
+    let timerId;
+    return (...args) => {
+      if (timerId) clearTimeout(timerId);
+      timerId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  const handleDoubleClick = debounce(() => {
     if (!liked) {
       likeOrDislikeHandler(); // Like the post
     }
     setShowHeart(true); // Trigger the heart animation
     setTimeout(() => setShowHeart(false), 1000); // Hide the animation after 1 second
-  };
+  }, 2000); // Adjust the delay (in milliseconds) as needed
+
+
+  
+  // const handleDoubleClick = () => {
+  //   if (!liked) {
+  //     likeOrDislikeHandler(); // Like the post
+  //   }
+  //   setShowHeart(true); // Trigger the heart animation
+  //   setTimeout(() => setShowHeart(false), 1000); // Hide the animation after 1 second
+  // };
 
   const likeOrDislikeHandler = async () => {
     try {
