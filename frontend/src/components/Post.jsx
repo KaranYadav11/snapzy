@@ -49,7 +49,7 @@ function Post({ post }) {
     }
     setShowHeart(true); // Trigger the heart animation
     setTimeout(() => setShowHeart(false), 1000); // Hide the animation after 1 second
-  }, 1100); // Adjust the delay (in milliseconds) as needed
+  }, 300); // Adjust the delay (in milliseconds) as needed
 
 
   
