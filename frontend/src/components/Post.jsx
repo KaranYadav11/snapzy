@@ -182,7 +182,7 @@ function Post({ post }) {
           <DialogTrigger asChild>
             <MoreHorizontal className="cursor-pointer select-none text-zinc-50 hover:text-zinc-300 " />
           </DialogTrigger>
-          <DialogContent className="text-xl text-center border-none p-4 w-[340px] h-auto bg-gradient-to-br from-purple-700 via-pink-500 to-red-400">
+          <DialogContent className="text-xl md:rounded-2xl rounded-2xl  text-center border-none p-4 w-[340px] h-auto bg-gradient-to-br from-purple-700 via-pink-500 to-red-400">
             <div className="flex flex-col gap-4 items-center justify-evenly">
               <Button
                 onClick={bookmarkHandler}
