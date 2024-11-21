@@ -17,7 +17,7 @@ function LowerNav() {
   const { count } = useSelector((store) => store.notify);
 
   return (
-    <div className="fixed bottom-0 bg-black h-fit w-full border-t-[3px] border-white  md:hidden  flex  justify-around p-1">
+    <div className="fixed bottom-0 bg-black h-fit w-full border-t-[3px] border-white  md:hidden z-50 flex  justify-around p-1">
       <Link
         to={"/"}
         className="text-white rounded-lg bg-black w-12 h-10 flex items-center justify-center "
