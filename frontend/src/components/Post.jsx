@@ -19,8 +19,11 @@ import { toast } from "sonner";
 import { setPosts, setSelectedPost } from "../redux/postSlice.js";
 import { Link } from "react-router-dom";
 import { setAuthUser } from "@/redux/authSlice";
+import { motion } from "framer-motion";
 
 function Post({ post }) {
+  const [showHeart, setShowHeart] = useState(false);
+
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.auth);
   const { posts } = useSelector((store) => store.post);
@@ -30,11 +33,19 @@ function Post({ post }) {
   const [comment, setComment] = useState(post?.comments);
   const [open, setOpen] = useState(false);
 
+  const handleDoubleClick = () => {
+    if (!liked) {
+      likeOrDislikeHandler(); // Like the post
+    }
+    setShowHeart(true); // Trigger the heart animation
+    setTimeout(() => setShowHeart(false), 1000); // Hide the animation after 1 second
+  };
+
   const likeOrDislikeHandler = async () => {
     try {
       const action = liked ? "dislike" : "like";
       const res = await axios.get(
-        `https://snapzy.onrender.com/api/v1/post/${post._id}/${action}`,
+        `http://localhost:8000/api/v1/post/${post._id}/${action}`,
         {
           withCredentials: true,
         }
@@ -65,7 +76,7 @@ function Post({ post }) {
   const commentHandler = async () => {
     try {
       const res = await axios.post(
-        `https://snapzy.onrender.com/api/v1/post/${post._id}/comment`,
+        `http://localhost:8000/api/v1/post/${post._id}/comment`,
         { text },
         {
           headers: { "Content-Type": "application/json" },
@@ -91,7 +102,7 @@ function Post({ post }) {
   const deletePostHandler = async () => {
     try {
       const res = await axios.delete(
-        `https://snapzy.onrender.com/api/v1/post/delete/${post._id}`,
+        `http://localhost:8000/api/v1/post/delete/${post._id}`,
         {
           withCredentials: true,
         }
@@ -110,7 +121,7 @@ function Post({ post }) {
   const bookmarkHandler = async () => {
     try {
       const res = await axios.get(
-        `https://snapzy.onrender.com/api/v1/post/${post?._id}/bookmark`,
+        `http://localhost:8000/api/v1/post/${post?._id}/bookmark`,
         { withCredentials: true }
       );
       if (res.data.success) {
@@ -136,7 +147,16 @@ function Post({ post }) {
       setText(inputText);
     } else setText("");
   }
+  let lastTap = 0;
+  const handleTouch = (e) => {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTap;
 
+    if (tapLength < 300 && tapLength > 0) {
+      handleDoubleClick();
+    }
+    lastTap = currentTime;
+  };
   return (
     <div className="my-7 w-full max-w-sm mx-auto">
       <div className="flex items-center bg-black rounded-lg mb-3 mt-8 justify-between">
@@ -169,7 +189,14 @@ function Post({ post }) {
                 variant="ghost"
                 className="cursor-pointer w-fit rounded-lg text-white font-extrabold font-lato"
               >
-                Add to <Bookmark />
+                {user?.bookmarks?.includes(post?._id)
+                  ? "Remove from"
+                  : "Add to"}
+                {user?.bookmarks?.includes(post?._id) ? (
+                  <Bookmark fill="white" />
+                ) : (
+                  <Bookmark className="bg-transparent" />
+                )}
               </Button>
               {user && user?._id === post?.author?._id && (
                 <Button
@@ -185,12 +212,25 @@ function Post({ post }) {
           </DialogContent>
         </Dialog>
       </div>
-      <img
-        className="rounded-2xl aspect-square object-cover w-full h-full"
-        src={post?.image}
-        alt="postImage"
-      />
-
+      <div
+        className="relative rounded-2xl overflow-hidden"
+        onTouchEnd={handleTouch}
+        onDoubleClick={handleDoubleClick}
+      >
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={showHeart ? { scale: 1.5, opacity: 1 } : {}}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="absolute inset-0 flex justify-center items-center z-10"
+        >
+          <FaHeart size={100} className="text-rose-500" />
+        </motion.div>
+        <img
+          className="rounded-2xl aspect-square object-cover w-full h-full"
+          src={post?.image}
+          alt="postImage"
+        />
+      </div>
       <div className="flex items-center justify-between mt-2 px-0.5">
         <div className="flex items-center gap-4 justify-start">
           {liked ? (

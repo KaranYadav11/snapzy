@@ -7,7 +7,7 @@ import { Input } from "./ui/input";
 import { MessageCircleDashed, SendHorizontal, UserRound } from "lucide-react";
 import Messages from "./Messages";
 import axios from "axios";
-import { setMessages } from "../redux/chatSlice.js";
+import { clearCount, setMessages } from "../redux/chatSlice.js";
 import { Link } from "react-router-dom";
 import { Badge } from "./ui/badge";
 
@@ -23,7 +23,7 @@ const ChatPage = () => {
   const sendMessageHandler = async (receiverId) => {
     try {
       const res = await axios.post(
-        `https://snapzy.onrender.com/api/v1/message/send/${receiverId}`,
+        `http://localhost:8000/api/v1/message/send/${receiverId}`,
         { textMessage },
         {
           headers: {
@@ -44,11 +44,12 @@ const ChatPage = () => {
   useEffect(() => {
     return () => {
       dispatch(setSelectedUser(null));
+      dispatch(clearCount());
     };
   }, [dispatch]);
 
   return (
-    <div className="flex ml-[16%] h-screen">
+    <div className="flex scrollbar-hide ml-[16%] h-screen bg-black">
       <section className="w-full scrollbar-hide md:w-1/4 my-2 py-2">
         <Link
           to={`/profile/${user?._id}`}
@@ -119,20 +120,26 @@ const ChatPage = () => {
       {selectedUser ? (
         <section className="flex-1  flex flex-col h-full">
           <div className="flex mt-2 h-24 justify-start gap-3 items-center px-10 py-0  z-10">
-            <Avatar className="w-14 h-14 ">
-              <AvatarImage
-                src={selectedUser?.profilePicture}
-                alt="profilePicture"
-              />
-              <AvatarFallback className="bg-white/10">
-                <UserRound size={22} color="white" />
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col">
-              <span className="font-lato font-bold text-white text-lg">
-                {selectedUser?.username}
-              </span>
-            </div>
+            <Link to={`/profile/${selectedUser._id}`}>
+              {" "}
+              <Avatar className="w-14 h-14 ">
+                <AvatarImage
+                  src={selectedUser?.profilePicture}
+                  alt="profilePicture"
+                />
+                <AvatarFallback className="bg-white/10">
+                  <UserRound size={22} color="white" />
+                </AvatarFallback>
+              </Avatar>
+            </Link>
+            <Link to={`/profile/${selectedUser._id}`}>
+              {" "}
+              <div className="flex flex-col">
+                <span className="font-lato font-bold text-white text-lg">
+                  {selectedUser?.username}
+                </span>
+              </div>
+            </Link>
           </div>
           <div className="flex bg-black items-center justify-center">
             <hr className="w-[98.5%] border-2" />

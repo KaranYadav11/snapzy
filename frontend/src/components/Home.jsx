@@ -11,19 +11,16 @@ function Home() {
   useGetSuggestedUsers();
 
   return (
-    <div className="flex antialiased  ">
+    <div className="flex antialiased bg-black">
       <div className="flex-grow">
         <Navbar />
         {loading ? (
-          <div className="w-full mt-8 md:mt-0 md:my-6 flex m-2 md:m-0 md:pl-[20%] bg-black justify-center items-center h-screen">
-            <div>
-              <Loader2 color="white" className="animate-spin h-7 w-7" />
-            </div>{" "}
+          <div className="mt-8 md:mt-0 md:my-6 flex m-2 md:m-0 md:pl-[20%] bg-black justify-center items-center h-[92vh] md:h-screen">
+            <Loader2 color="white" className="animate-spin h-7 w-7" />
           </div>
         ) : (
           <>
             <Feed />
-            <Outlet />
           </>
         )}
       </div>

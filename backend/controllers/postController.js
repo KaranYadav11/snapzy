@@ -1,10 +1,10 @@
 import Post from "../models/postModel.js";
 import User from "../models/userModel.js";
 import Comment from "../models/commentModel.js";
-
 import sharp from "sharp";
 import cloudinary from "../utils/cloudinary.js";
 import { getReceiverSocketId, io } from "../socket/socket.js";
+import Notification from "../models/notificationModel.js";
 export const getAllPost = async (req, res) => {
   try {
     const allPosts = await Post.find()
@@ -109,16 +109,38 @@ export const likePost = async (req, res) => {
       "username profilePicture"
     );
     const postOwnerId = post.author.toString();
-    if (postOwnerId !== userLikingPost) {
-      const notification = {
-        userDetails: user,
-        userId: userLikingPost,
-        type: "like",
+
+    // if (postOwnerId !== userLikingPost) {
+    //   const notification = {
+    //     userDetails: user,
+    //     userId: userLikingPost,
+    //     type: "like",
+    //     postId,
+    //     message: `${user.username} liked your post`,
+    //   };
+    //   const postOwnerSocketId = getReceiverSocketId(postOwnerId);
+    //   io.to(postOwnerSocketId).emit("notification", notification);
+    // }
+
+    if (userLikingPost !== postOwnerId) {
+      const notification = new Notification({
+        from: userLikingPost,
+        to: postOwnerId,
         postId,
-        message: `${user.username} liked your post`,
-      };
+        type: "like",
+      });
+      await notification.save();
+
+      // Populate 'from' field with username and profilePicture
+      const populatedNotification = await Notification.findById(
+        notification._id
+      ).populate({
+        path: "from", // Refers to the 'from' field in the Notification schema
+        select: "username profilePicture", // Only fetch these fields
+      });
+
       const postOwnerSocketId = getReceiverSocketId(postOwnerId);
-      io.to(postOwnerSocketId).emit("notification", notification);
+      io.to(postOwnerSocketId).emit("notification", populatedNotification);
     }
 
     return res.status(200).json({ success: true, message: "Post Liked ❤️" });
@@ -144,12 +166,18 @@ export const dislikePost = async (req, res) => {
     );
     const postOwnerId = post.author.toString();
     if (postOwnerId !== userLikingPost) {
+      // Remove the like notification
+      await Notification.findOneAndDelete({
+        from: userLikingPost,
+        to: postOwnerId,
+        type: "like",
+      });
+    }
+
+    if (postOwnerId !== userLikingPost) {
       const notification = {
-        userDetails: user,
-        userId: userLikingPost,
         type: "dislike",
         postId,
-        message: `${user.username} disliked your post`,
       };
       const postOwnerSocketId = getReceiverSocketId(postOwnerId);
       io.to(postOwnerSocketId).emit("notification", notification);

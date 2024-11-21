@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { User, Mail, Lock } from "lucide-react";
+import { Mail, Lock, UserRound } from "lucide-react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ function Signup() {
     try {
       setLoading(true);
       const res = await axios.post(
-        `https://snapzy.onrender.com/api/v1/user/register`,
+        `http://localhost:8000/api/v1/user/register`,
         input,
         {
           headers: {
@@ -75,7 +75,7 @@ function Signup() {
         <div>
           <Label className="block font-lato text-white text-opacity-90 mb-1">
             <div className="flex items-center justify-start font-bold font-lato">
-              <User size={18} className="mr-2 text-white " />
+              <UserRound size={18} className="mr-2 text-white " />
               Username
             </div>
           </Label>

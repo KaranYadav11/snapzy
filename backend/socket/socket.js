@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
   if (userId) {
     userSocketMap[userId] = socket.id;
-    console.log(`User ${userId} connected , socket id: ${socket.id}`);
+    console.log(`📍User ${userId} connected with socket id: ${socket.id}`);
   }
 
   io.emit("getOnlineUsers", Object.keys(userSocketMap));

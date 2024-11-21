@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import getDataUri from "../utils/dataUri.js";
 import cloudinary from "../utils/cloudinary.js";
 import Post from "../models/postModel.js";
+import Notification from "../models/notificationModel.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const register = async (req, res) => {
   try {
@@ -103,7 +105,7 @@ export const login = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server Error" });
   }
 };
-// added to logout the user httpOnly: true, secure: true
+
 export const logout = async (_, res) => {
   try {
     return res
@@ -190,10 +192,9 @@ export const getSuggestedUsers = async (req, res) => {
 };
 export const followOrUnfollow = async (req, res) => {
   try {
-    console.log(req.id, req.params.id);
-    const followKrneWala = req.id; // patel
-    const jiskoFollowKrunga = req.params.id; // shivani
-    if (followKrneWala === jiskoFollowKrunga) {
+    const followKrneWala = req.id;
+    const jiskoFollowKrunga = req.params.id;
+    if (followKrneWala.toString() === jiskoFollowKrunga) {
       return res.status(400).json({
         message: "You cannot follow/unfollow yourself",
         success: false,
@@ -209,10 +210,9 @@ export const followOrUnfollow = async (req, res) => {
         success: false,
       });
     }
-    // mai check krunga ki follow krna hai ya unfollow
+
     const isFollowing = user.following.includes(jiskoFollowKrunga);
     if (isFollowing) {
-      // unfollow logic ayega
       await Promise.all([
         User.updateOne(
           { _id: followKrneWala },
@@ -222,12 +222,27 @@ export const followOrUnfollow = async (req, res) => {
           { _id: jiskoFollowKrunga },
           { $pull: { followers: followKrneWala } }
         ),
+        Notification.deleteOne({
+          from: followKrneWala,
+          to: jiskoFollowKrunga,
+          type: "follow",
+        }),
       ]);
-      return res
-        .status(200)
-        .json({ message: `Unfollowed ${targetUser.username}`, success: true });
+
+      if (followKrneWala !== jiskoFollowKrunga) {
+        const notification = {
+          type: "unfollow",
+          postId: followKrneWala,
+        };
+        const postOwnerSocketId = getReceiverSocketId(jiskoFollowKrunga);
+        io.to(postOwnerSocketId).emit("notification", notification);
+
+        return res.status(200).json({
+          message: `Unfollowed ${targetUser.username}`,
+          success: true,
+        });
+      }
     } else {
-      // follow logic ayega
       await Promise.all([
         User.updateOne(
           { _id: followKrneWala },
@@ -238,6 +253,24 @@ export const followOrUnfollow = async (req, res) => {
           { $push: { followers: followKrneWala } }
         ),
       ]);
+
+      const newNotification = new Notification({
+        from: followKrneWala,
+        to: jiskoFollowKrunga,
+        type: "follow",
+        postId: followKrneWala,
+      });
+      await newNotification.save();
+
+      const populatedNotification = await Notification.findById(
+        newNotification._id
+      ).populate({
+        path: "from",
+        select: "username profilePicture",
+      });
+
+      const postOwnerSocketId = getReceiverSocketId(jiskoFollowKrunga);
+      io.to(postOwnerSocketId).emit("notification", populatedNotification);
       return res
         .status(200)
         .json({ message: `Followed ${targetUser.username}`, success: true });

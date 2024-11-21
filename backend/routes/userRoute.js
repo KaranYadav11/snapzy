@@ -13,7 +13,7 @@ router
   .route("/profile/edit")
   .post(
     isAuthenticated,
-    upload.single("profilePicture"),
+    upload.single("profilePhoto"),
     userController.editProfile
   );
 

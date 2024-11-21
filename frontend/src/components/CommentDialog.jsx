@@ -51,7 +51,7 @@ function CommentDialog({ open, setOpen }) {
   const postHandler = async () => {
     try {
       const res = await axios.post(
-        `https://snapzy.onrender.com/api/v1/post/${selectedPost._id}/comment`,
+        `http://localhost:8000/api/v1/post/${selectedPost._id}/comment`,
         { text },
         {
           headers: { "Content-Type": "application/json" },
@@ -147,7 +147,7 @@ function CommentDialog({ open, setOpen }) {
                     }}
                   />
                   {text && (
-                    <div className="bg-black rounded-lg mr-1">
+                    <div className="bg-black mb-4 md:mb-0 rounded-lg mr-1">
                       {/* <Button
                         onClick={postHandler}
                         className="bg-gradient-to-br tracking-wide text-sm from-purple-700 via-pink-500 to-red-400 bg-black text-transparent bg-clip-text font-bold font-lato p-2"

@@ -11,11 +11,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setSocket } from "./redux/socketSlice";
 import { setOnlineUsers } from "./redux/chatSlice";
-import { setLikeNotification } from "./redux/rtnSlice";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Create from "./components/Create";
 import CreateChat from "./components/CreateChat";
 import Convo from "./components/Convo";
+import Notification from "./components/Notification";
+import NotFound from "./components/NotFound";
+import { pushNotification } from "./redux/notifySlice";
 // import { setLikeNotification } from "./redux/rtnSlice";
 const BrowserRouter = createBrowserRouter([
   {
@@ -82,6 +84,14 @@ const BrowserRouter = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
+      {
+        path: "/notification",
+        element: (
+          <ProtectedRoutes>
+            <Notification />,
+          </ProtectedRoutes>
+        ),
+      },
     ],
   },
   {
@@ -91,6 +101,10 @@ const BrowserRouter = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
@@ -102,7 +116,7 @@ function App() {
   useEffect(() => {
     let socketio;
     if (user) {
-      socketio = io("https://snapzy.onrender.com", {
+      socketio = io("http://localhost:8000", {
         query: {
           userId: user?._id,
         },
@@ -115,7 +129,7 @@ function App() {
       });
 
       socketio.on("notification", (notification) => {
-        dispatch(setLikeNotification(notification));
+        dispatch(pushNotification(notification));
       });
 
       return () => {
@@ -129,7 +143,7 @@ function App() {
   }, [user, dispatch]);
 
   return (
-    <div className="bg-black">
+    <div className="bg-black ">
       <RouterProvider router={BrowserRouter} />
     </div>
   );
