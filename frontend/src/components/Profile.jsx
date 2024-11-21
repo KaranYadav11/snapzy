@@ -18,7 +18,6 @@ import { useState } from "react";
 import axios from "axios";
 import { setAuthUser, setUserProfile } from "@/redux/authSlice";
 import { toast } from "sonner";
-import LowerNav from "./LowerNav";
 
 const Profile = () => {
   const params = useParams();
@@ -42,7 +41,7 @@ const Profile = () => {
   const handleFollowOrUnfollow = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:8000/api/v1/user/followorunfollow/${userProfile._id}`,
+        `https://snapzy.onrender.com/api/v1/user/followorunfollow/${userProfile._id}`,
         {},
         { withCredentials: true }
       );

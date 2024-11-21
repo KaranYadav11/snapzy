@@ -17,8 +17,6 @@ import CreatePost from "./CreatePost";
 import { setAuthUser } from "@/redux/authSlice";
 import { setPosts, setSelectedPost } from "@/redux/postSlice";
 
-// import { clearNotification } from "@/redux/rtnSlice";
-
 function Leftsidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,9 +39,12 @@ function Leftsidebar() {
   ];
   const logOut = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/v1/user/logout`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `https://snapzy.onrender.com/api/v1/user/logout`,
+        {
+          withCredentials: true,
+        }
+      );
       if (res.data.success) {
         dispatch(setAuthUser(null));
         dispatch(setPosts([]));
@@ -87,9 +88,7 @@ function Leftsidebar() {
         break;
     }
   };
-  // function clear(isOpen) {
-  //   if (!isOpen) dispatch(clearNotification());
-  // }
+
   return (
     <div className="fixed bg-black hidden md:block antialiased top-0 left-0 z-10 px-4 h-screen w-[16%]">
       <div className="flex flex-col items-start justify-between">

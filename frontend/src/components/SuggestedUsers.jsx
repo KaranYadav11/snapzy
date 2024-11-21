@@ -35,9 +35,6 @@ function SuggestedUsers() {
                   {user?.bio}
                 </p>
               </div>
-              {/* <div className="text-white bg-purple-500 right-5 py-1 tracking-normal  font-bold text-sm  px-3 rounded-full absolute cursor-pointer font-lato">
-                Follow
-              </div> */}
             </div>
           );
         })}

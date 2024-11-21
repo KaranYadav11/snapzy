@@ -10,11 +10,7 @@ function Mainlayout() {
   return (
     <div className="bg-black">
       <Leftsidebar />
-      {/* <div className="bg-gray-400"> */}
-      {/* <div className="bg-purple-400 main  antialiased"> */}
       <Outlet />
-
-      {/* </div> */}
       <div>{!isConvoPage && <LowerNav />}</div>
     </div>
   );

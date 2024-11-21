@@ -15,16 +15,16 @@ createRoot(document.getElementById("root")).render(
       <PersistGate loading={null} persistor={persistor}>
         <App />
         <Toaster
-          position="bottom-right" // Adjust position as needed
+          position="bottom-right"
           toastOptions={{
             style: {
-              backgroundColor: "#000000", // Dark background
-              color: "#fff", // White text color
-              borderRadius: "12px", // Rounded corners
-              padding: "12px", // Larger padding for more space
+              backgroundColor: "#000000",
+              color: "#fff",
+              borderRadius: "12px",
+              padding: "12px",
               boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.3)",
             },
-            duration: 3000, // Custom duration for each toast
+            duration: 3000,
           }}
         />
       </PersistGate>

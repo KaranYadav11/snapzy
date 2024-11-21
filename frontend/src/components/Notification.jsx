@@ -25,7 +25,7 @@ function Notification() {
     try {
       if (notifications.length > 0) {
         const res = await axios.delete(
-          "http://localhost:8000/api/v1/notification",
+          "https://snapzy.onrender.com/api/v1/notification",
           {
             withCredentials: true,
           }

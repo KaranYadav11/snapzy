@@ -15,7 +15,7 @@ const useGetNotification = () => {
         try {
           setLoading(true);
           const res = await axios.get(
-            "http://localhost:8000/api/v1/notification",
+            "https://snapzy.onrender.com/api/v1/notification",
             {
               withCredentials: true,
             }

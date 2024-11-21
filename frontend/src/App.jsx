@@ -18,7 +18,7 @@ import Convo from "./components/Convo";
 import Notification from "./components/Notification";
 import NotFound from "./components/NotFound";
 import { pushNotification } from "./redux/notifySlice";
-// import { setLikeNotification } from "./redux/rtnSlice";
+
 const BrowserRouter = createBrowserRouter([
   {
     path: "/",
@@ -116,7 +116,7 @@ function App() {
   useEffect(() => {
     let socketio;
     if (user) {
-      socketio = io("http://localhost:8000", {
+      socketio = io("https://snapzy.onrender.com", {
         query: {
           userId: user?._id,
         },

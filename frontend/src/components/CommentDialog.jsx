@@ -1,15 +1,8 @@
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Dialog, DialogContent, DialogOverlay } from "./ui/dialog";
-import {
-  MoreHorizontal,
-  SendHorizontal,
-  SendHorizontalIcon,
-  Trash,
-  UserRound,
-  UserRoundX,
-} from "lucide-react";
-import { Button } from "./ui/button";
+import { SendHorizontalIcon, UserRound } from "lucide-react";
+
 import { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +44,7 @@ function CommentDialog({ open, setOpen }) {
   const postHandler = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:8000/api/v1/post/${selectedPost._id}/comment`,
+        `https://snapzy.onrender.com/api/v1/post/${selectedPost._id}/comment`,
         { text },
         {
           headers: { "Content-Type": "application/json" },
