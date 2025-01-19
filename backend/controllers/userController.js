@@ -190,6 +190,7 @@ export const getSuggestedUsers = async (req, res) => {
     console.log(error);
   }
 };
+
 export const followOrUnfollow = async (req, res) => {
   try {
     const followKrneWala = req.id;
@@ -275,6 +276,23 @@ export const followOrUnfollow = async (req, res) => {
         .status(200)
         .json({ message: `Followed ${targetUser.username}`, success: true });
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const allUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+    if (!users) {
+      return res.status(400).json({
+        message: "Currently do not have any users",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      users,
+    });
   } catch (error) {
     console.log(error);
   }

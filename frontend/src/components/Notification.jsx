@@ -49,16 +49,16 @@ function Notification() {
   }, [dispatch]);
 
   return (
-    <div className="md:ml-[16%] md:flex md:items-center md:justify-center">
+    <div className="md:ml-[16%]  md:flex md:items-center md:justify-center">
       {loading ? (
-        <div className="h-screen bg-black flex items-center justify-center">
+        <div className="h-screen bg-black  flex items-center justify-center">
           <Loader2 color="white" className="animate-spin w-7 h-7" />
         </div>
       ) : (
-        <div className="text-white flex flex-col items-center md:mt-2 md:w-[40vw] px-2 py-2  font-lato min-h-screen w-full bg-blac">
-          <div className="flex items-center rounded-2xl py-3 px-4 justify-between bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 w-full ">
-            <div className="font-lato py-2 text-white font-bold text-2xl">
-              <span> Notifications</span>
+        <div className="text-white flex top-2 flex-col items-center px-2 py-2 md:mt-2 md:w-[40vw]  font-lato min-h-screen container ">
+          <div className="flex  items-center rounded-2xl py-3 px-4 justify-between bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 w-full ">
+            <div className="font-lato py-2  text-white font-bold text-2xl">
+              <span>Notifications</span>
             </div>
 
             <div>
@@ -67,7 +67,7 @@ function Notification() {
               </button>
               <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger asChild></DialogTrigger>
-                <DialogContent className="bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 flex flex-col items-center justify-start md:ml-[7.2%] w-[90%] md:w-[30vw] h-48 rounded-2xl">
+                <DialogContent className="bg-gradient-to-br md:rounded-2xl from-purple-700 via-pink-500 to-red-400 flex flex-col items-center justify-start md:ml-[7.2%] w-[90%] md:w-[30vw] h-48 rounded-2xl">
                   <DialogTitle className="h-fit mt-3 mx-2 font-lato text-center font-bold text-white text-2xl">
                     Delete All Notifications
                   </DialogTitle>
@@ -96,9 +96,9 @@ function Notification() {
               </Dialog>
             </div>
           </div>
-          <hr className=" border-white border-2  md:w-[98%] w-[97%] my-2" />
+          <hr className=" border-white border-2   md:w-[98%] w-[97%] my-2" />
           {notifications?.length === 0 && (
-            <div className="flex flex-col w-full items-center justify-center h-[70vh]">
+            <div className="flex   flex-col w-full items-center justify-center h-[70vh]">
               <Bell className="w-40 h-40 my-4 text-white/10" />
               <span className="font-lato text-white/20 text-sm tracking-wide font-normal ">
                 No new notifications!
@@ -108,7 +108,7 @@ function Notification() {
           {notifications?.map((notify) => (
             <div
               key={notify._id}
-              className="flex w-full items-center justify-between p-2"
+              className="flex w-full  items-center justify-between p-2"
             >
               <div className="flex items-center gap-2">
                 <Avatar className="w-11 h-11 ">

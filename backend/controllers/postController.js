@@ -5,9 +5,25 @@ import sharp from "sharp";
 import cloudinary from "../utils/cloudinary.js";
 import { getReceiverSocketId, io } from "../socket/socket.js";
 import Notification from "../models/notificationModel.js";
+
 export const getAllPost = async (req, res) => {
   try {
-    const allPosts = await Post.find()
+    const loggedInUserId = req.id;
+
+    const loggedInUser = await User.findById(loggedInUserId).select(
+      "following"
+    );
+    if (!loggedInUser) {
+      return res.status(404).json({ message: "Logged-in user not found" });
+    }
+
+    const followingUsers = await User.find({
+      _id: { $in: loggedInUser.following },
+    });
+
+    const followingUserIds = followingUsers.map((user) => user._id);
+
+    const allPosts = await Post.find({ author: { $in: followingUserIds } })
       .sort({ createdAt: -1 })
       .populate({ path: "author", select: "username profilePicture" })
       .populate({
@@ -15,13 +31,15 @@ export const getAllPost = async (req, res) => {
         sort: { createdAt: -1 },
         populate: { path: "author", select: "username profilePicture" },
       });
+
     return res.status(200).json({
       success: true,
       allPosts,
-      message: "All Posts",
+      message: "Posts from followed users",
     });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    console.error("Error fetching posts:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -35,8 +53,6 @@ export const addNewPost = async (req, res) => {
       .resize({ width: 800, height: 800, fit: "inside" })
       .toFormat("jpeg", { quality: 80 })
       .toBuffer();
-
-    // buffer to data URI
 
     const fileUri = `data:image/jpeg;base64,${optimizedImage.toString(
       "base64"

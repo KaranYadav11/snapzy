@@ -18,6 +18,7 @@ import Convo from "./components/Convo";
 import Notification from "./components/Notification";
 import NotFound from "./components/NotFound";
 import { pushNotification } from "./redux/notifySlice";
+import SearchPage from "./components/SearchPage";
 
 const BrowserRouter = createBrowserRouter([
   {
@@ -92,6 +93,14 @@ const BrowserRouter = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
+      {
+        path: "/search",
+        element: (
+          <ProtectedRoutes>
+            <SearchPage />,
+          </ProtectedRoutes>
+        ),
+      },
     ],
   },
   {
@@ -116,7 +125,7 @@ function App() {
   useEffect(() => {
     let socketio;
     if (user) {
-      socketio = io("https://snapzy.onrender.com", {
+      socketio = io("http://localhost:8000", {
         query: {
           userId: user?._id,
         },

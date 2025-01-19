@@ -4,13 +4,18 @@ import useGetAllPost from "../hooks/useGetAllPost.js";
 import useGetSuggestedUsers from "@/hooks/useGetSuggestedUsers";
 import Navbar from "./Navbar";
 import { Loader2 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 function Home() {
   const { loading } = useGetAllPost();
   useGetSuggestedUsers();
-
+  const { posts } = useSelector((store) => store.post);
   return (
-    <div className="flex antialiased bg-black">
+    <div
+      className={`flex  ${
+        posts.length === 0 ? "h-screen items-center justify-center" : ""
+      } antialiased bg-black `}
+    >
       <div className="flex-grow">
         <Navbar />
         {loading ? (

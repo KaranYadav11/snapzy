@@ -6,7 +6,6 @@ import {
   Bookmark,
   MessageCircle,
   MoreHorizontal,
-  Send,
   Trash,
   UserRound,
 } from "lucide-react";
@@ -33,13 +32,33 @@ function Post({ post }) {
   const [comment, setComment] = useState(post?.comments);
   const [open, setOpen] = useState(false);
 
-  const handleDoubleClick = () => {
+  // Debounce implementation
+  const debounce = (func, delay) => {
+    let timerId;
+    return (...args) => {
+      if (timerId) clearTimeout(timerId);
+      timerId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  const handleDoubleClick = debounce(() => {
     if (!liked) {
       likeOrDislikeHandler(); // Like the post
     }
     setShowHeart(true); // Trigger the heart animation
     setTimeout(() => setShowHeart(false), 1000); // Hide the animation after 1 second
-  };
+  }, 2000); // Adjust the delay (in milliseconds) as needed
+
+  // hey
+  // const handleDoubleClick = () => {
+  //   if (!liked) {
+  //     likeOrDislikeHandler(); // Like the post
+  //   }
+  //   setShowHeart(true); // Trigger the heart animation
+  //   setTimeout(() => setShowHeart(false), 1000); // Hide the animation after 1 second
+  // };
 
   const likeOrDislikeHandler = async () => {
     try {
@@ -182,7 +201,7 @@ function Post({ post }) {
           <DialogTrigger asChild>
             <MoreHorizontal className="cursor-pointer select-none text-zinc-50 hover:text-zinc-300 " />
           </DialogTrigger>
-          <DialogContent className="text-xl text-center border-none p-4 w-[340px] h-auto bg-gradient-to-br from-purple-700 via-pink-500 to-red-400">
+          <DialogContent className="text-xl md:rounded-2xl rounded-2xl text-center border-none p-4 w-[340px] h-auto bg-gradient-to-br from-purple-700 via-pink-500 to-red-400">
             <div className="flex flex-col gap-4 items-center justify-evenly">
               <Button
                 onClick={bookmarkHandler}
@@ -255,7 +274,6 @@ function Post({ post }) {
             size={26}
             className="transition text-white hover:text-white/70 transform cursor-pointer duration-300"
           />
-          <Send size={26} color="white" className="cursor-pointer" />
         </div>
         {user?.bookmarks?.includes(post?._id) ? (
           <Bookmark

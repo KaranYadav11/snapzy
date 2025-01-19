@@ -5,8 +5,11 @@ import { UserRound, UsersRound } from "lucide-react";
 
 function SuggestedUsers() {
   const { suggestedUsers } = useSelector((store) => store.auth);
+  const displayedUsers = [...(suggestedUsers || [])]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 5);
   return (
-    <div className="flex  mt-10 h-auto flex-col w-[320px]  items-center ">
+    <div className="flex overflow-y-auto  mt-10 h-auto flex-col w-[320px]  items-center ">
       <div className="flex items-center justify-between text-white font-lato">
         <div className="font-bold gap-2 flex items-center mb-4 tracking-normal font-lato text-xl text-white ">
           <UsersRound size={22} />
@@ -14,7 +17,7 @@ function SuggestedUsers() {
         </div>
       </div>
       <div className="bg-black w-full flex flex-col gap-y-0 font-lato">
-        {suggestedUsers?.map((user) => {
+        {displayedUsers?.map((user) => {
           return (
             <div
               key={user?._id}

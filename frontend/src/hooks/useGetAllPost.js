@@ -10,11 +10,14 @@ const useGetAllPost = () => {
   useEffect(() => {
     const fetchAllPost = async () => {
       try {
-        const res = await axios.get("https://snapzy.onrender.com/api/v1/post/all", {
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          "https://snapzy.onrender.com/api/v1/post/all",
+          {
+            withCredentials: true,
+          }
+        );
         if (res.data.success) {
-          console.log(res.data.allPosts);
+          console.log(res.data, "all posts");
           if (posts.length !== res.data.allPosts.length)
             dispatch(setPosts(res.data.allPosts));
         }

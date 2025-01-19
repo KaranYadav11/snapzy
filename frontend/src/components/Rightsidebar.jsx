@@ -8,7 +8,7 @@ import { Badge } from "./ui/badge";
 const RightSidebar = () => {
   const { user } = useSelector((store) => store.auth);
   return (
-    <div className="w-[350px] hidden md:block my-12 px-4">
+    <div className="w-[350px]  hidden xl:block my-12 px-4">
       <div className="sticky top-4">
         <div>
           <Link
@@ -23,7 +23,7 @@ const RightSidebar = () => {
               </AvatarFallback>
             </Avatar>
             <div className="relative">
-              <p className="font-lato  w-36  truncate absolute tracking-wide -top-[25px] text-white text-lg font-bold">
+              <p className="font-lato  w-36 truncate absolute tracking-wide -top-[25px] text-white text-lg font-bold">
                 {user?.username}
               </p>
               <Badge className="absolute text-white bg-black/70 font-lato font-bold -top-[22px] left-[158px]">

@@ -3,12 +3,19 @@ import { useSelector } from "react-redux";
 import useGetAllMessage from "../hooks/useGetAllMessage.js";
 import useGetRTM from "../hooks/useGetRTM.js";
 import { Loader2, MessageCircleDashed, UserRound } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 const Messages = ({ selectedUser }) => {
   useGetRTM();
+  const messageEndRef = useRef(null);
   const { loading } = useGetAllMessage();
   const { messages } = useSelector((store) => store.chat);
   const { user } = useSelector((store) => store.auth);
+  useEffect(() => {
+    if (messageEndRef.current && messages) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return loading ? (
     <div className="flex-1 flex items-center justify-center overflow-y-auto p-4">
@@ -56,6 +63,7 @@ const Messages = ({ selectedUser }) => {
                   </AvatarFallback>
                 </Avatar>
                 <div
+                  ref={messageEndRef}
                   className={`px-4 py-1 h-8 rounded-full font-lato font-bold max-w-xs break-words ${
                     msg.senderId === user?._id
                       ? "bg-gradient-to-br rounded-br-lg from-purple-400 via-pink-500 to-rose-500 text-black "

@@ -87,7 +87,7 @@ const Profile = () => {
         </div>
       ) : (
         <div
-          className={`flex bg-black min-h-screen w-fit overflow-x-hidden md:max-w-5xl justify-center md:mx-auto md:pl-[2%] ${
+          className={`flex  min-h-screen w-full overflow-x-hidden md:max-w-5xl justify-center md:mx-auto md:pl-[2%] ${
             activeTab === "saved" ? "h-full" : ""
           }`}
         >

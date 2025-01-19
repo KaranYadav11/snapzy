@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { setSelectedUser } from "../redux/authSlice.js";
 import { Input } from "./ui/input";
-
 import { MessageCircleDashed, SendHorizontal, UserRound } from "lucide-react";
 import Messages from "./Messages";
 import axios from "axios";
 import { clearCount, setMessages } from "../redux/chatSlice.js";
 import { Link } from "react-router-dom";
-import { Badge } from "./ui/badge";
 
 const ChatPage = () => {
   const [textMessage, setTextMessage] = useState("");
@@ -66,9 +64,6 @@ const ChatPage = () => {
             <p className="font-lato  w-36  truncate absolute tracking-wide -top-[25px] text-white text-lg font-bold">
               <Link to={`/profile/${user?._id}`}> {user?.username}</Link>
             </p>
-            <Badge className="absolute text-white bg-black/70 font-lato font-bold -top-[22px] left-[158px]">
-              Active
-            </Badge>
 
             <p className="font-lato absolute h-5 overflow-hidden w-56  -top-[0px] tracking-normal text-white/90 font-medium antialiased text-xs truncate">
               {user?.bio}

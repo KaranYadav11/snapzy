@@ -10,8 +10,8 @@ function CreateChat() {
   const dispatch = useDispatch();
   const { onlineUsers } = useSelector((store) => store.chat);
   return (
-    <div className="bg-black h-screen ">
-      <section className="w-full scrollbar-hide px-2 py-2">
+    <div className="relative h-screen md:pl-[16%]">
+      <section className="w-full fixed md:max-w-fit scrollbar-hide px-2 py-2">
         <Link
           to={`/profile/${user?._id}`}
           className="flex gap-2 rounded-2xl bg-gradient-to-br  from-purple-700 via-pink-500 to-red-400  w-full px-4 py-3  items-center"
@@ -27,10 +27,6 @@ function CreateChat() {
             <p className="font-lato  w-36  truncate absolute tracking-wide -top-[25px] text-white text-lg font-bold">
               <Link to={`/profile/${user?._id}`}> {user?.username}</Link>
             </p>
-            <Badge className="absolute text-white bg-black/70 font-lato font-bold -top-[14px] left-[157px]">
-              Active
-            </Badge>
-
             <p className="font-lato absolute h-5 overflow-hidden w-56  -top-[0px] tracking-normal text-white/90 font-medium antialiased text-xs truncate">
               {user?.bio}
             </p>
@@ -60,7 +56,7 @@ function CreateChat() {
                     />
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex items-center  w-full">
+                <div className="flex items-center justify-between w-full">
                   <span className="font-bold  w-48 truncate font-lato text-lg duration-300 transform text-white group-hover:text-black">
                     {suggestedUser?.username}
                   </span>
@@ -71,7 +67,7 @@ function CreateChat() {
                         : "text-gray-50/50 group-hover:text-gray-950/40"
                     } `}
                   >
-                    {isOnline ? "Active" : "offline"}
+                    {isOnline ? "Active" : "Offline"}
                   </Badge>
                 </div>
               </Link>

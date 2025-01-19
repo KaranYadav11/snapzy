@@ -68,7 +68,7 @@ function CreatePost({ open, setOpen }) {
       navigate("/");
     }
   };
-
+  // className="w-full h-full md:h-fit flex overflow-scroll scrollbar-hide overflow-x-hidden flex-col gap-4 items-center text-xl text-center border-none md:w-[410px] md:max-h-screen bg-gradient-to-br from-purple-700 via-pink-500 to-red-400 "
   return (
     <div>
       <Dialog open={open}>
