@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Leftsidebar from "./Leftsidebar";
-// import LowerNav from "./LowerNav";
 import { useLocation } from "react-router-dom";
 
 function Mainlayout() {
@@ -11,7 +10,6 @@ function Mainlayout() {
     <div className="bg-black">
       <Leftsidebar />
       <Outlet />
-      {/* <div>{!isConvoPage && <LowerNav />}</div> */}
     </div>
   );
 }

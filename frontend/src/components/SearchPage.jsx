@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Bell, Loader2, Search, UserRound } from "lucide-react";
+import { Loader2, Search, UserRound, UserRoundSearch } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   Dialog,
@@ -127,9 +127,9 @@ function SearchPage() {
           <hr className="border-white border-2 md:w-[98%] w-[97%] my-2" />
           {filteredUsers.length === 0 ? (
             <div className="flex flex-col w-full items-center justify-center h-[70vh]">
-              <Bell className="w-40 h-40 my-4 text-white/10" />
+              <UserRoundSearch className="w-40 h-40 my-4 text-white/10" />
               <span className="font-lato text-white/20 text-sm tracking-wide font-normal">
-                No Users Found
+                No User Found
               </span>
             </div>
           ) : (

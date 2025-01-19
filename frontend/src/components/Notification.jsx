@@ -67,7 +67,7 @@ function Notification() {
               </button>
               <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger asChild></DialogTrigger>
-                <DialogContent className="bg-gradient-to-br md:rounded-2xl from-purple-700 via-pink-500 to-red-400 flex flex-col items-center justify-start md:ml-[7.2%] w-[90%] md:w-[30vw] h-48 rounded-2xl">
+                <DialogContent className="bg-gradient-to-br  md:rounded-2xl  from-purple-700 via-pink-500 to-red-400 flex flex-col items-center justify-start md:ml-[7.2%] w-[90%] md:w-[30vw] h-48 rounded-2xl">
                   <DialogTitle className="h-fit mt-3 mx-2 font-lato text-center font-bold text-white text-2xl">
                     Delete All Notifications
                   </DialogTitle>

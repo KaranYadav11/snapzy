@@ -220,7 +220,6 @@ const Profile = () => {
           </div>
         </div>
       )}
-      {/* <LowerNav /> */}
     </div>
   );
 };
