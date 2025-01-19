@@ -125,7 +125,7 @@ function App() {
   useEffect(() => {
     let socketio;
     if (user) {
-      socketio = io("http://localhost:8000", {
+      socketio = io("https://snapzy.onrender.com", {
         query: {
           userId: user?._id,
         },
